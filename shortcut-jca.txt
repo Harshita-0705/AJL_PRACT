@@ -1,0 +1,38 @@
+Cipher → Encrypt/Decrypt
+MessageDigest → Hash
+Mac → MAC
+Signature → Sign/Verify
+KeyGenerator → Secret Key
+KeyPairGenerator → Public/Private Key
+
+Universal JCA Steps
+    getInstance("Algorithm")
+    init(...)
+    update(...)   // optional
+    doFinal()     // OR sign() / verify()
+
+
+Encryption / Decryption (AES / RSA)
+    Cipher c = Cipher.getInstance("AES");
+    c.init(Cipher.ENCRYPT_MODE, key);
+    byte[] out = c.doFinal(data);
+
+
+Hashing (MD5 / SHA-256)
+    MessageDigest md = MessageDigest.getInstance("SHA-256");
+    byte[] hash = md.digest(data);
+
+
+MAC/HMAC
+    Mac mac = Mac.getInstance("HmacSHA256");
+    mac.init(secretKey);
+    byte[] macVal = mac.doFinal(data);
+
+
+Digital Signature
+    Signature s = Signature.getInstance("SHA256withRSA");
+    s.initSign(privateKey);
+    s.update(data);
+    byte[] sign = s.sign();
+
+
