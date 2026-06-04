@@ -1,54 +1,45 @@
-// Product Interfaces
-interface Bike {
-    void showBike();
+interface Vehicle
+{
+    void drive();
 }
-
-interface Car {
-    void showCar();
-}
-
-// Sports Products
-class SportsBike implements Bike {
-    public void showBike() {
-        System.out.println("Sports Bike Created");
+class Bus implements Vehicle
+{
+    public void drive()
+    {
+        System.out.println("Bus is driving");
     }
 }
-
-class SportsCar implements Car {
-    public void showCar() {
-        System.out.println("Sports Car Created");
+class Car implements Vehicle
+{
+    public void drive()
+    {
+        System.out.println("Car is driving");
     }
 }
-
-// Abstract Factory
-interface VehicleFactory {
-    Bike createBike();
-    Car createCar();
+interface VehicleFactory
+{
+    void createBus();
+    void createCar();
 }
-
-// Concrete Factory
-class SportsFactory implements VehicleFactory {
-
-    public Bike createBike() {
-        return new SportsBike();
+class LandVehicle implements VehicleFactory 
+{
+    public Vehicle createBus()
+    {
+         return new Bus();
     }
-
-    public Car createCar() {
-        return new SportsCar();
+    public Vehicle createCar()
+    {
+       return new Car();   
     }
 }
-
-// Main Class
-public class Abstract {
-
-    public static void main(String[] args) {
-
-        VehicleFactory factory = new SportsFactory();
-
-        Bike bike = factory.createBike();
-        Car car = factory.createCar();
-
-        bike.showBike();
-        car.showCar();
+public class Abstract
+{
+    public static void main(String[] args) 
+    {
+        LandVehicle landVehicle = new LandVehicle();
+        Vehicle bus = landVehicle.createBus();
+        bus.drive();
+        Vehicle car = landVehicle.createCar();
+        car.drive();
     }
 }

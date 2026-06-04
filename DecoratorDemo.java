@@ -1,33 +1,64 @@
-interface PaymentService {
-    void pay();
+interface Coffee {
+    int cost();
+    String description();
 }
+class SimpleCoffee implements Coffee {
 
-class BasicPaymentService implements PaymentService {
-    public void pay() {
-        System.out.println("Payment processed");
+    public int cost() {
+        return 50;
+    }
+
+    public String description() {
+        return "Simple Coffee";
+    }
+}
+abstract class CoffeeDecorator implements Coffee {
+
+    protected Coffee coffee;
+
+    CoffeeDecorator(Coffee coffee) {
+        this.coffee = coffee;
+    }
+}
+class MilkDecorator extends CoffeeDecorator {
+
+    MilkDecorator(Coffee coffee) {
+        super(coffee);
+    }
+
+    public int cost() {
+        return coffee.cost() + 10;
+    }
+
+    public String description() {
+        return coffee.description() + " + Milk";
     }
 }
 
-class LoggingDecorator implements PaymentService {
+class SugarDecorator extends CoffeeDecorator {
 
-    private PaymentService service;
-
-    LoggingDecorator(PaymentService service) {
-        this.service = service;
+    SugarDecorator(Coffee coffee) {
+        super(coffee);
     }
 
-    public void pay() {
-        System.out.println("Logging request...");
-        service.pay();
+    public int cost() {
+        return coffee.cost() + 5;
+    }
+
+    public String description() {
+        return coffee.description() + " + Sugar";
     }
 }
+public class Main {
 
-public class DecoratorDemo  {
     public static void main(String[] args) {
 
-        PaymentService service =
-            new LoggingDecorator(new BasicPaymentService());
+        Coffee coffee = new SimpleCoffee();
+        System.out.println(coffee.description() + " = " + coffee.cost());
 
-        service.pay();
+        coffee = new MilkDecorator(coffee);
+        coffee = new SugarDecorator(coffee);
+
+        System.out.println(coffee.description() + " = " + coffee.cost());
     }
 }
